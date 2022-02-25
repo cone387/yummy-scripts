@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# stop at when any error
+set -e
+
 echo "|------------------------------------Python Setup Shell------------------------------------------|"
 
 
@@ -48,6 +51,8 @@ function install_python() {
     cd Python-$PYTHON_VERSION
 
     # 不然或缺少_ctype
+    sudo apt-get update
+    sudo apt-get -y upgrade --fix-missing
     sudo apt-get install libffi-dev
 
     sudo ./configure prefix=$INSTALL_PATH
@@ -57,7 +62,7 @@ function install_python() {
     sudo sudo rm -f /usr/bin/$PYTHON_BIN
     rm -f /usr/bin/$PIP_BIN
 
-    sudo ln -s $INSTALL_PATH/bin/$PYTHON_BIN /usr/bin/$PIP_BIN
+    sudo ln -s $INSTALL_PATH/bin/$PYTHON_BIN /usr/bin/$PYTHON_BIN
     sudo ln -s $INSTALL_PATH/bin/$PIP_BIN /usr/bin/$PIP_BIN
 
     echo "python$PYTHON_VERSION to $INSTALL_PATH install success"
